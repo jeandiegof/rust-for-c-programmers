@@ -433,7 +433,7 @@ s2 is a **dangling pointer**,<br>it does not point to valid data anymore.
 
 +++
 
-The ownership model catch this kind of issues in compile time.
+The **ownership model** catch this kind of issues **in compile time**.
 
 +++
 
@@ -478,7 +478,7 @@ yes, it does. But why?
 
 +++
 
-deep copies are **never** done automatically
+deep copies are **not** done by default
 
 +++
 
@@ -487,12 +487,8 @@ the string is **moved** to s2
 
 +++
 
-but since the integer is stack allocated, it is **copied**.
-
-+++
-
-For the **primitive type**, there is no difference between a
-shallow and a deep copy.
+but for the integer, there is no difference between a
+shallow and a deep copy, so it is **copied**.
 
 +++
 
@@ -700,6 +696,73 @@ hello world!
 
 +++
 
+You have to be very permissive to allow your data to be modified.
+
++++
+
+but what if we were using C?
+
++++
+
+What does the following program prints?
+
+```C
+void print_str(char const * str);
+
+int main(void) {
+  char const * str = allocate_string("hello world!");
+
+  print_str(str);
+  printf("%s\n", str);
+
+  return 0;
+}
+```
+
++++
+
+expected output
+
+```shell
+hello world!
+hello world!
+```
+
++++
+
+consider the following implementation of `print_str`
+
+```C [1-7|4-6]
+void print_str(char const * str) {
+  printf("%s\n", str);
+
+  // cast the const away
+  char * mut_str = (char *)str;
+  strcpy(mut_str, "bye world!");
+}
+
+int main(void) {
+  char const * str = allocate_string("hello world!");
+
+  print_str(str);
+  printf("%s\n", str);
+
+  return 0;
+}
+```
+
++++
+
+the code compiles, executes and outputs:
+
+```shell
+> ./constexample
+hello world!
+bye world!
+```
+
++++
+
 multiple refs?
 data only lives while its owner is alive
 why rust doesn't have a garbage collector?
@@ -718,22 +781,19 @@ This is **reliability**.
 
 +++
 
-You cannot modify something that is behind a non-mutable reference, while in C, you can
-just cast the `const` away.
-
-string example in C: malloc, copy
-
 ---
 
 
 ## Extras
 
-- build types: release and debug
-- unit test framework: cargo test
+- rust book
+- rust embedded book
+- toolchain
+  - build types: release and debug
+  - unit test framework: cargo test
 - lifetimes
-- traits
-- rust embedded
-- generics
+- enum, option, result
+- generics and traits
 - parallel programming
 
 ---
