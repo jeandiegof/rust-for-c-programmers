@@ -1,4 +1,4 @@
-## A (gentle) introduction to Rust
+## Rust for C programmers
 
 ---
 
@@ -14,7 +14,11 @@
 
 +++
 
-### deeep, but more specificaly, Rust...
+poetic, but this alone probably won't convince you
+
++++
+
+so more specificaly, Rust...
 
 +++
 
@@ -307,11 +311,11 @@ let x = x + 5;
 
 +++
 
-variables are mutable only **when you explicitly say so**
+variables are **mutable** only when you **explicitly** say so
 
 +++
 
-what is wrong with mutable variables by default?
+what is **wrong** with mutable variables **by default**?
 
 +++
 
@@ -531,7 +535,13 @@ how to fix it?
 
 +++
 
-receiving a **reference** to the string instead
+### References
+
++++
+
+We fix it by receiving a **reference** to the string instead.
+
++++
 
 ```rust [1-10|1|8]
 fn print_string(s: &String) {
@@ -659,11 +669,11 @@ error[E0596]: cannot borrow `hello` as mutable, as it is not declared as mutable
 
 +++
 
-this is the moment you start cursing the compiler
+this is the moment you start **cursing the compiler**
 
 +++
 
-but remember, it is only protecting you :)
+but remember, it is only **protecting you** :)
 
 +++
 
@@ -696,7 +706,15 @@ hello world!
 
 +++
 
-You have to be very permissive to allow your data to be modified.
+so, references are **immutable by default**,
+
++++
+
+if you need it to be **mutable**, you have to use a **mutable reference** instead.
+
++++
+
+In Rust, you have to be very **explicit** to allow your **data** to be **modified**.
 
 +++
 
@@ -704,9 +722,9 @@ but what if we were using C?
 
 +++
 
-What does the following program prints?
+What does line 7 print?
 
-```C
+```C [1-10]
 void print_str(char const * str);
 
 int main(void) {
@@ -763,9 +781,195 @@ bye world!
 
 +++
 
-multiple refs?
-data only lives while its owner is alive
-why rust doesn't have a garbage collector?
+In C, even if your libraries are __const correct__, your data still can be modified,
+**intentionally or not**.
+
++++
+
+**How many references** to a variable are **allowed**?
+
++++
+
+in C?
+
++++
+
+no real limitation
+
++++
+
+in Rust?
+
++++
+
+you can have *either* one **mutable** reference or *any* number of **immutable** references
+
++++
+
+two immutable references
+
+```Rust [1-9|4-5|1-9]
+fn main() {
+    let mut s = String::from("hello");
+
+    let s_ref = &s;
+    let s_other_ref = &s;
+
+    println!("{}", s_ref);
+    println!("{}", s_other_ref);
+}
+```
+
+```
+> cargo run
+hello
+hello
+```
+
++++
+
+a single mutable reference
+
+```Rust [1-8|4|1-8]
+fn main() {
+    let mut s = String::from("hello");
+
+    let s_ref = &mut s;
+    s_ref.push_str(" world");
+
+    println!("{}", s_ref);
+}
+```
+
+```
+> cargo run
+hello world
+```
+
++++
+
+two mutable references?
+
+```Rust [1-9|4-5|1-9]
+fn main() {
+    let mut s = String::from("hello");
+
+    let s_ref = &mut s;
+    let s_other_ref = &mut s;
+
+    println!("{}", s_other_ref);
+    println!("{}", s_ref);
+}
+```
+
++++
+
+```shell
+error[E0499]: cannot borrow `s` as mutable more than once at a time
+ --> src/main.rs:5:23
+  |
+4 |     let s_ref = &mut s;
+  |                 ------ first mutable borrow occurs here
+5 |     let s_other_ref = &mut s;
+  |                       ^^^^^^ second mutable borrow occurs here
+...
+8 |     println!("{}", s_ref);
+  |                    ----- first borrow later used here
+```
+
++++
+
+one mutable and one immutable reference?
+
+```Rust [1-9|4-5|1-9]
+fn main() {
+    let mut s = String::from("hello");
+
+    let s_ref = &mut s;
+    let s_other_ref = &s;
+
+    println!("{}", s_other_ref);
+    println!("{}", s_ref);
+}
+```
+
++++
+
+```shell
+error[E0502]: cannot borrow `s` as immutable because it is also borrowed as mutable
+ --> src/main.rs:5:23
+  |
+4 |     let s_ref = &mut s;
+  |                 ------ mutable borrow occurs here
+5 |     let s_other_ref = &s;
+  |                       ^^ immutable borrow occurs here
+...
+8 |     println!("{}", s_ref);
+  |                    ----- mutable borrow later used here 
+```
+
++++
+
+but why?
+
++++
+
+people holding a immutable reference don't expect the data to change,
+
++++
+
+and people holding a mutable reference don't expect other people modifying the data.
+
++++
+
+### Dangling references
+
++++
+
+they don't exist
+
++++
+
+🤯
+
++++
+
+References must **always be valid** and this is enforced by the compiler.
+
++++
+
+being valid means that the **data won't go out of scope before the reference does**.
+
++++
+
+```Rust [1-10|1-5|1|2|4|1-10]
+fn hello() -> &String {
+    let s = String::from("hello");
+
+    &s
+}
+
+fn main() {
+    let s = hello();
+    println!("{}", s);
+}
+```
+
++++
+
+```shell
+error[E0106]: missing lifetime specifier
+ --> src/main.rs:1:15
+  |
+1 | fn hello() -> &String {
+  |               ^ expected named lifetime parameter
+  |
+  = help: this function's return type contains a borrowed value, but there is no value for it to be borrowed from
+```
+
++++
+
+there is **no need** for a **garbage collector**
 
 +++
 
@@ -773,28 +977,69 @@ The **type system** and the **ownership model** together can catch several bugs 
 
 +++
 
-If your code compiled, you can trust it.
+If your **code compiled**, you can **trust it**.
 
 +++
 
 This is **reliability**.
 
+---
+
+## Is Rust *fast*?<br>Is it *memory efficient*?
+
 +++
+
+Rust provides high-level features through what are called *zero cost abstractions*.
+
++++
+
+The features provided don't have a *run-time* cost, only a *compile time* cost.
+
++++
+
+In other words, the abstractions are as fast and as efficient as one would write
+the same functionality by hand.
+
++++
+
+So you can use generics, type states, structs, vectors, the *newtype* pattern, etc., without worrying.
+
++++
+
+At the end of the day, well-optimized **Rust code** can be **as fast as** well-optimized **C code**.
+
++++
+
+### What about the memory layout?
+
++++
+
+zero cost abstractions
+size of structures
+type states
+iterators vs array indexing
 
 ---
 
-
-## Extras
+## Going further
 
 - rust book
 - rust embedded book
+- too many lists
+
+---
+
+## Other topics
 - toolchain
   - build types: release and debug
   - unit test framework: cargo test
+- the typesystem: configuring GPIOs in runtime?
 - lifetimes
 - enum, option, result
 - generics and traits
 - parallel programming
+
++++
 
 ---
 
