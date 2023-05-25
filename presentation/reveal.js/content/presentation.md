@@ -14,11 +14,11 @@
 
 +++
 
-poetic, but this alone probably won't convince you
+Poetic, but this alone probably won't convince you.
 
 +++
 
-so more specificaly, Rust...
+So, more specificaly, **Rust**...
 
 +++
 
@@ -32,11 +32,7 @@ uses **LLVM** for code generation
 
 combines **low-level performance**<br>with **high-level features** (iterators, std, async)
 
-+++
-
-**may or may not** be an OOP language<br>(it depends on your definition of OOP)
-
-+++
+---
 
 ## Why Rust?
 
@@ -46,21 +42,17 @@ Rust can provide you three things.
 
 +++
 
-(and they should be enough for most cases)
+**Productivity**<br> through a good toolchain
 
 +++
 
-**productivity**<br> through a good toolchain
+**Reliability**<br> through its unique type system and ownership model
 
 +++
 
-**reliability**<br> through its unique type system and ownership model
+**Performance**<br>through memory efficiency and safety
 
-+++
-
-**performance**<br>through memory efficiency and safety
-
-+++
+---
 
 ## Who is using Rust?
 
@@ -70,7 +62,7 @@ Mozilla, Amazon, Microsoft, Discord, Dropbox, Figma, Google, Facebook, npm<br>..
 
 +++
 
-yes, it is production ready (for most domains).
+Yes, it is **production ready**.
 
 ---
 
@@ -88,7 +80,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 +++
 
-this installs the rust toolchain<br>(**rustup**, **rustc** and **cargo**)
+This installs the rust toolchain<br>(**rustup**, **rustc** and **cargo**)
 
 ---
 
@@ -223,7 +215,7 @@ This is **productivity**.<br>
 
 ---
 
-## Show me the code
+## How is Rust different from C?
 
 +++
 
@@ -274,7 +266,7 @@ fn main() {
 
 +++
 
-not in Rust.
+Not in Rust.
 
 ```shell
 error[E0384]: cannot assign twice to immutable variable `x`
@@ -293,7 +285,7 @@ For more information about this error, try `rustc --explain E0384`.
 
 +++
 
-a possible alternative
+A possible alternative
 
 ```rust [1|1-2]
 let mut x = 10;
@@ -302,7 +294,7 @@ x = x + 5;
 
 +++
 
-a possible alternative
+Another alternative
 
 ```rust [1-2|2]
 let x = 10;
@@ -311,11 +303,11 @@ let x = x + 5;
 
 +++
 
-variables are **mutable** only when you **explicitly** say so
+Variables are **mutable** only when you **explicitly** say so.
 
 +++
 
-what is **wrong** with mutable variables **by default**?
+What is **wrong** with mutable variables **by default**?
 
 +++
 
@@ -334,7 +326,7 @@ int main(void) {
 
 +++
 
-the correct version
+The correct version
 
 ```C [1-7|2|4|1-7]
 int main(void) {
@@ -350,7 +342,7 @@ int main(void) {
 
 ### Ownership
 
-+++
++++.
 
 **Data** in Rust can only have **one owner at a time**
 
@@ -360,7 +352,7 @@ and it **exists** only while its **owner exist**.
 
 +++
 
-what should happen in the scenario below?
+What should happen in the scenario below?
 
 ```rust
 fn main() {
@@ -373,7 +365,7 @@ fn main() {
 
 +++
 
-in Rust, it does not compile.
+In Rust, it does not compile.
 
 ```shell [1-11|1|9-10|6-7]
 error[E0382]: borrow of moved value: `s1`
@@ -391,7 +383,7 @@ error[E0382]: borrow of moved value: `s1`
 
 +++
 
-but this is valid in C
+But this is valid in C
 
 ```C [1-13|1-6|8-13]
 char * allocate_string(char * str) {
@@ -411,7 +403,7 @@ int main(void) {
 
 +++
 
-what if we free s1?
+What if we free s1?
 
 ```C [1-15|12|14]
 char * allocate_string(char * str) {
@@ -454,7 +446,7 @@ fn main() {
 
 +++
 
-but does this code compile?
+But what about this?
 
 ```Rust
 fn main() {
@@ -467,7 +459,7 @@ fn main() {
 
 +++
 
-yes, it does. But why?
+It compiles and runs. But why?
 
 ```shell
 > cargo run
@@ -478,25 +470,25 @@ yes, it does. But why?
 
 +++
 
-**deep copy** versus **shallow copy**
+**Deep copy** versus **Shallow copy**
 
 +++
 
-deep copies are **not** done by default
+Deep copies are **not** done by default.
 
 +++
 
-and since data can only have **one owner** at a time,<br>
-the string is **moved** to s2
+And since data can only have **one owner** at a time,<br>
+the string is **moved** to s2.
 
 +++
 
-but for the integer, there is no difference between a
+For the integer, however, there is no difference between a
 shallow and a deep copy, so it is **copied**.
 
 +++
 
-Still about ownership, does the following compiles?
+Still about ownership, does the following compile?
 
 ```rust [1-10|1-3|5-10|6|8|9]
 fn print_string(s: String) {
@@ -513,7 +505,7 @@ fn main() {
 
 +++
 
-no, it does not.
+No, it does not.
 
 ```shell
 error[E0382]: borrow of moved value: `hello`
@@ -531,7 +523,7 @@ error[E0382]: borrow of moved value: `hello`
 
 +++
 
-how to fix it?
+How to fix it?
 
 +++
 
@@ -569,11 +561,11 @@ hello
 
 +++
 
-what if we need to **modify** the data inside the function?
+What if we need to **modify** the data inside the function?
 
 +++
 
-does the following compile?
+Does the following compile?
 
 ```rust [1-10|1-3|5-10|6|7|9]
 fn append_word(s: &String, word: &str) {
@@ -590,9 +582,9 @@ fn main() {
 
 +++
 
-no, it does not.
+No, it does not.
 
-```
+```shell
 error[E0596]: cannot borrow `*s` as mutable, as it is behind a `&` reference
  --> src/main.rs:2:5
   |
@@ -604,7 +596,7 @@ error[E0596]: cannot borrow `*s` as mutable, as it is behind a `&` reference
 
 +++
 
-does it compile now?
+Does it compile now?
 
 ```rust [1|1-10]
 fn append_word(s: &mut String, word: &str) {
@@ -621,7 +613,7 @@ fn main() {
 
 +++
 
-no, it still does not.
+No, it still does not.
 
 ```shell [1-10|7|4-5|9-10]
 error[E0308]: mismatched types
@@ -638,7 +630,7 @@ error[E0308]: mismatched types
 
 +++
 
-and now?
+And now?
 
 ```rust [7|1-10]
 fn append_word(s: &mut String, word: &str) {
@@ -655,7 +647,7 @@ fn main() {
 
 +++
 
-not yet :(
+Not yet :(
 
 ```shell [1-7|6-7|4-5]
 error[E0596]: cannot borrow `hello` as mutable, as it is not declared as mutable
@@ -669,15 +661,15 @@ error[E0596]: cannot borrow `hello` as mutable, as it is not declared as mutable
 
 +++
 
-this is the moment you start **cursing the compiler**
+This is the moment you start **cursing the compiler**
 
 +++
 
-but remember, it is only **protecting you** :)
+But remember, it is only **protecting you**!
 
 +++
 
-does it compile now?
+Does it compile now?
 
 ```rust [6|1-10]
 fn append_word(s: &mut String, word: &str) {
@@ -694,7 +686,7 @@ fn main() {
 
 +++
 
-yes 🎉
+Yes 🎉
 
 ```shell
 > cargo run
@@ -706,11 +698,11 @@ hello world!
 
 +++
 
-so, references are **immutable by default**,
+So, references are **immutable by default**.
 
 +++
 
-if you need it to be **mutable**, you have to use a **mutable reference** instead.
+If you need it to be **mutable**, you have to use a **mutable reference** instead.
 
 +++
 
@@ -718,7 +710,7 @@ In Rust, you have to be very **explicit** to allow your **data** to be **modifie
 
 +++
 
-but what if we were using C?
+But what if we were using C?
 
 +++
 
@@ -739,7 +731,7 @@ int main(void) {
 
 +++
 
-expected output
+Expected output
 
 ```shell
 hello world!
@@ -748,7 +740,7 @@ hello world!
 
 +++
 
-consider the following implementation of `print_str`
+Consider the following implementation of `print_str`
 
 ```C [1-7|4-6]
 void print_str(char const * str) {
@@ -771,7 +763,7 @@ int main(void) {
 
 +++
 
-the code compiles, executes and outputs:
+The code compiles, executes and outputs:
 
 ```shell
 > ./constexample
@@ -786,27 +778,31 @@ In C, even if your libraries are __const correct__, your data still can be modif
 
 +++
 
+### Multiple references
+
++++
+
 **How many references** to a variable are **allowed**?
 
 +++
 
-in C?
+In C?
 
 +++
 
-no real limitation
+It is limited only by memory.
 
 +++
 
-in Rust?
+In Rust?
 
 +++
 
-you can have *either* one **mutable** reference or *any* number of **immutable** references
+You can have *either* one **mutable** reference or *any* number of **immutable** references.
 
 +++
 
-two immutable references
+Two immutable references
 
 ```Rust [1-9|4-5|1-9]
 fn main() {
@@ -828,7 +824,7 @@ hello
 
 +++
 
-a single mutable reference
+A single mutable reference
 
 ```Rust [1-8|4|1-8]
 fn main() {
@@ -848,7 +844,7 @@ hello world
 
 +++
 
-two mutable references?
+Two mutable references?
 
 ```Rust [1-9|4-5|1-9]
 fn main() {
@@ -879,7 +875,7 @@ error[E0499]: cannot borrow `s` as mutable more than once at a time
 
 +++
 
-one mutable and one immutable reference?
+One mutable and one immutable reference?
 
 ```Rust [1-9|4-5|1-9]
 fn main() {
@@ -910,15 +906,15 @@ error[E0502]: cannot borrow `s` as immutable because it is also borrowed as muta
 
 +++
 
-but why?
+But why?
 
 +++
 
-people holding a immutable reference don't expect the data to change,
+People holding an immutable reference<br>**don't expect the data to change**.
 
 +++
 
-and people holding a mutable reference don't expect other people modifying the data.
+And people holding a mutable reference<br>**don't expect other people to modify the data**.
 
 +++
 
@@ -926,7 +922,7 @@ and people holding a mutable reference don't expect other people modifying the d
 
 +++
 
-they don't exist
+they don't exist.
 
 +++
 
@@ -938,7 +934,7 @@ References must **always be valid** and this is enforced by the compiler.
 
 +++
 
-being valid means that the **data won't go out of scope before the reference does**.
+Being valid means that the **data won't go out of scope before the reference does**.
 
 +++
 
@@ -969,7 +965,7 @@ error[E0106]: missing lifetime specifier
 
 +++
 
-there is **no need** for a **garbage collector**
+There is **no need** for a **garbage collector**.
 
 +++
 
@@ -989,16 +985,16 @@ This is **reliability**.
 
 +++
 
-Rust provides high-level features through what are called *zero cost abstractions*.
+Rust provides high-level features through what are called<br>**zero cost abstractions**.
 
 +++
 
-The features provided don't have a *run-time* cost, only a *compile time* cost.
+The features provided don't have a **run-time** cost, only a **compile time** cost.
 
 +++
 
-In other words, the abstractions are as fast and as efficient as one would write
-the same functionality by hand.
+In other words, the abstractions are **as fast** and **as efficient** as one would write
+the **same functionality by hand**.
 
 +++
 
@@ -1010,38 +1006,67 @@ At the end of the day, well-optimized **Rust code** can be **as fast as** well-o
 
 +++
 
-### What about the memory layout?
+So, high-level features with no run-time costs?
 
 +++
 
-zero cost abstractions
-size of structures
-type states
-iterators vs array indexing
+This is **performance**.
 
 ---
 
 ## Going further
 
-- rust book
-- rust embedded book
-- too many lists
++++
 
----
-
-## Other topics
-- toolchain
-  - build types: release and debug
-  - unit test framework: cargo test
-- the typesystem: configuring GPIOs in runtime?
-- lifetimes
-- enum, option, result
-- generics and traits
-- parallel programming
+Rust Book<br>https://doc.rust-lang.org/book/
 
 +++
 
+Rust Embedded Book<br>https://docs.rust-embedded.org/book/
+
++++
+
+Rust by Example Book<br>https://doc.rust-lang.org/rust-by-example/
+
++++
+
+## Other topics
+
++++
+
+### Using cargo
+
+To manage build types, test your code and cross compile.
+
++++
+
+### The Type System
+
+The *newtype*, the *type state* and the *builder* patterns.
+
++++
+
+### Generics and Traits
+
++++
+
+### Enums
+
+The Option and the Result type.
+
++++
+
+### Memory Layout
+
++++
+
+### Parallel Programming
+
 ---
 
-## Conclusion
+## Questions?
+
+---
+
+## Thank you for attending
 
