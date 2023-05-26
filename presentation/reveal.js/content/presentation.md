@@ -6,7 +6,7 @@
 
 +++
 
-### according to the official website...
+### According to the official website...
 
 +++
 
@@ -42,15 +42,15 @@ Rust can provide you three things.
 
 +++
 
-**Productivity**<br> through a good toolchain
+**Productivity**<br> through a good *toolchain*.
 
 +++
 
-**Reliability**<br> through its unique type system and ownership model
+**Reliability**<br> through its unique *type system* and *ownership model*.
 
 +++
 
-**Performance**<br>through memory efficiency and safety
+**Performance**<br>through *memory efficiency* and *safety*.
 
 ---
 
@@ -96,9 +96,11 @@ cargo new hello-world
 
 +++
 
+### Project structure
+
 ```shell
-> tree .
-.
+> tree hello-world
+hello-world
 ├── Cargo.toml
 └── src
     └── main.rs
@@ -108,7 +110,7 @@ cargo new hello-world
 
 +++
 
-src/main.rs
+### src/main.rs
 
 ```Rust
 fn main() {
@@ -117,6 +119,8 @@ fn main() {
 ```
 
 +++
+
+### Running the project
 
 ```shell
 > cargo run
@@ -128,7 +132,7 @@ Hello, world!
 
 +++
 
-Cargo.toml
+### Cargo.toml
 
 ```toml
 [package]
@@ -145,7 +149,7 @@ edition = "2021"
 
 +++
 
-Cargo.toml
+### Cargo.toml
 
 ```toml [0-0|6-7]
 [package]
@@ -159,7 +163,7 @@ rand = "0.8.5"
 
 +++
 
-src/main.rs
+### src/main.rs
 
 ```rust
 fn main() {
@@ -186,7 +190,7 @@ Hello, world! 197
 
 +++
 
-The `Cargo.toml` is _like_ a `CMakelists.txt` or a `meson.build`
+The *Cargo.toml* is **_like_** a *CMakelists.txt* or a *meson.build*.
 
 +++
 
@@ -194,11 +198,8 @@ Crates are _like_ libraries, and they come from a **registry**.
 
 +++
 
-**crates.io** is the community (and also the default) registry.
-
-+++
-
-but alternate registries are supported.
+**crates.io** is the community (and also the default) registry,<br>
+but alternate registries are also supported.
 
 +++
 
@@ -206,8 +207,8 @@ The toolchain let you focus on **what really matters**.<br>
 
 +++
 
-Create the project, add dependencies, add a test framework, manage
-multiple build types or targets **should not take of your valuable time**.
+Set up the project, add dependencies, add a test framework, manage
+multiple build types and targets **should not take of your valuable time**.
 
 +++
 
@@ -342,7 +343,7 @@ int main(void) {
 
 ### Ownership
 
-+++.
++++
 
 **Data** in Rust can only have **one owner at a time**
 
@@ -367,12 +368,13 @@ fn main() {
 
 In Rust, it does not compile.
 
-```shell [1-11|1|9-10|6-7]
+```shell [1-12|1|10-11|7-8]
 error[E0382]: borrow of moved value: `s1`
  --> src/main.rs:5:22
   |
 2 |     let s1 = String::from("Hello");
-  |         -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait
+  |         -- move occurs because `s1` has type `String`,
+  |            which does not implement the `Copy` trait
 3 |     let s2 = s1;
   |              -- value moved here
 4 |
@@ -429,7 +431,7 @@ s2 is a **dangling pointer**,<br>it does not point to valid data anymore.
 
 +++
 
-The **ownership model** catch this kind of issues **in compile time**.
+The **ownership model** catch this kind of issues<br>**in compile time**.
 
 +++
 
@@ -507,12 +509,13 @@ fn main() {
 
 No, it does not.
 
-```shell
+```shell [1-12|1|8-9|10-11]
 error[E0382]: borrow of moved value: `hello`
  --> src/main.rs:9:20
   |
 6 |     let hello = String::from("hello");
-  |         ----- move occurs because `hello` has type `String`, which does not implement the `Copy` trait
+  |         ----- move occurs because `hello` has type `String`,
+  |               which does not implement the `Copy` trait
 7 |
 8 |     print_string(hello);
   |                  ----- value moved here
@@ -584,14 +587,19 @@ fn main() {
 
 No, it does not.
 
-```shell
-error[E0596]: cannot borrow `*s` as mutable, as it is behind a `&` reference
+```shell [1-11|1-2|5-8|9-12]
+error[E0596]: cannot borrow `*s` as mutable, as it is behind
+              a `&` reference
  --> src/main.rs:2:5
   |
 1 | fn append_word(s: &String, word: &str) {
-  |                   ------- help: consider changing this to be a mutable reference: `&mut String`
+  |                   ------- help: consider changing this to be
+  |                                 a mutable reference:
+  |                                 `&mut String`
 2 |     s.push_str(word);
-  |     ^^^^^^^^^^^^^^^^ `s` is a `&` reference, so the data it refers to cannot be borrowed as mutable
+  |     ^^^^^^^^^^^^^^^^ `s` is a `&` reference, so the data
+  |                      it refers to cannot be borrowed as
+  |                      mutable.
 ```
 
 +++
@@ -649,19 +657,21 @@ fn main() {
 
 Not yet :(
 
-```shell [1-7|6-7|4-5]
-error[E0596]: cannot borrow `hello` as mutable, as it is not declared as mutable
+```shell [1-9|1-2|8-9|5-7]
+error[E0596]: cannot borrow `hello` as mutable, as it is not
+              declared as mutable
  --> src/main.rs:7:17
   |
 6 |     let hello = String::from("hello");
-  |         ----- help: consider changing this to be mutable: `mut hello`
+  |         ----- help: consider changing this to be
+  |               mutable: `mut hello`
 7 |     append_word(&mut hello, " world!");
   |                 ^^^^^^^^^^ cannot borrow as mutable
 ```
 
 +++
 
-This is the moment you start **cursing the compiler**
+This is when you start **cursing the compiler**.
 
 +++
 
@@ -860,14 +870,17 @@ fn main() {
 
 +++
 
-```shell
-error[E0499]: cannot borrow `s` as mutable more than once at a time
+```shell [1-13|1-2]
+error[E0499]: cannot borrow `s` as mutable more than once
+              at a time
  --> src/main.rs:5:23
   |
 4 |     let s_ref = &mut s;
-  |                 ------ first mutable borrow occurs here
+  |                 ------ first mutable borrow
+  |                        occurs here
 5 |     let s_other_ref = &mut s;
-  |                       ^^^^^^ second mutable borrow occurs here
+  |                       ^^^^^^ second mutable borrow
+  |                              occurs here
 ...
 8 |     println!("{}", s_ref);
   |                    ----- first borrow later used here
@@ -891,8 +904,9 @@ fn main() {
 
 +++
 
-```shell
-error[E0502]: cannot borrow `s` as immutable because it is also borrowed as mutable
+```shell [1-11|1-2]
+error[E0502]: cannot borrow `s` as immutable because it is
+              also borrowed as mutable
  --> src/main.rs:5:23
   |
 4 |     let s_ref = &mut s;
@@ -922,7 +936,7 @@ And people holding a mutable reference<br>**don't expect other people to modify 
 
 +++
 
-they don't exist.
+They don't exist.
 
 +++
 
@@ -930,13 +944,7 @@ they don't exist.
 
 +++
 
-References must **always be valid** and this is enforced by the compiler.
-
-+++
-
-Being valid means that the **data won't go out of scope before the reference does**.
-
-+++
+Dangling reference?
 
 ```Rust [1-10|1-5|1|2|4|1-10]
 fn hello() -> &String {
@@ -960,8 +968,17 @@ error[E0106]: missing lifetime specifier
 1 | fn hello() -> &String {
   |               ^ expected named lifetime parameter
   |
-  = help: this function's return type contains a borrowed value, but there is no value for it to be borrowed from
+  = help: this function's return type contains a borrowed value,
+    but there is no value for it to be borrowed from
 ```
+
++++
+
+References must **always be valid** and<br>this is **enforced by the compiler**.
+
++++
+
+Being valid means that the **data won't go out of scope before the reference does**.
 
 +++
 
@@ -1069,4 +1086,3 @@ The Option and the Result type.
 ---
 
 ## Thank you for attending
-
