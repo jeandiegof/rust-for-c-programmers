@@ -2,6 +2,19 @@
 
 ---
 
+## Summary
+
+1. **What** is Rust?
+2. **Why** Rust?
+3. **Who** is using Rust?
+4. Installation
+5. Hello World
+6. How is Rust **different** from C?
+7. Is Rust **_fast_**? Is it **_memory efficient_**?
+8. Going further
+
+---
+
 ## What is Rust?
 
 +++
@@ -538,6 +551,8 @@ We fix it by receiving a **reference** to the string instead.
 
 +++
 
+Receiving a reference as argument
+
 ```rust [1-10|1|8]
 fn print_string(s: &String) {
     println!("{}", s);
@@ -932,6 +947,14 @@ And people holding a mutable reference<br>**don't expect other people to modify 
 
 +++
 
+What kind of **problem** does this rule **solve**?
+
++++
+
+Data races.
+
++++
+
 ### Dangling references
 
 +++
@@ -1065,6 +1088,8 @@ The *newtype*, the *type state* and the *builder* patterns.
 
 ### Generics and Traits
 
+Implementing shared behavior.
+
 +++
 
 ### Enums
@@ -1075,13 +1100,24 @@ The Option and the Result type.
 
 ### Memory Layout
 
+Are Rust structs like C structs?
+
 +++
 
 ### Parallel Programming
 
+Threads, concurrency and Rayon.
+
 ---
 
 ## Questions?
+
+---
+
+## Reaching out to me
+
+@jeandiegof on GitHub and Twitter<br>
+jeanfontena@gmail.com
 
 ---
 
