@@ -188,6 +188,15 @@ fn main() {
 
 ```
 > cargo run
+    Updating crates.io index
+  Downloaded getrandom v0.2.9
+  Downloaded libc v0.2.144
+  Downloaded rand_core v0.6.4
+  Downloaded cfg-if v1.0.0
+  Downloaded rand_chacha v0.3.1
+  Downloaded rand v0.8.5
+  Downloaded ppv-lite86 v0.2.17
+  Downloaded 7 crates (871.8 KB) in 0.68s
    Compiling libc v0.2.144
    Compiling cfg-if v1.0.0
    Compiling ppv-lite86 v0.2.17
@@ -195,10 +204,10 @@ fn main() {
    Compiling rand_core v0.6.4
    Compiling rand_chacha v0.3.1
    Compiling rand v0.8.5
-   Compiling hello-world v0.1.0 (/home/user/dev/hello-world)
-    Finished dev [unoptimized + debuginfo] target(s) in 1.67s
-     Running `target/debug/hello-world`
-Hello, world! 197
+   Compiling random v0.1.0 (/tmp/random)
+    Finished dev [unoptimized + debuginfo] target(s) in 1m 15s
+     Running `target/debug/random`
+Hello, world! 221
 ```
 
 +++
