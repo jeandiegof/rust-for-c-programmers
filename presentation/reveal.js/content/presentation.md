@@ -1081,6 +1081,8 @@ Rust by Example Book<br>https://doc.rust-lang.org/rust-by-example/
 
 ## Other topics
 
+(that I could cover in the future)
+
 +++
 
 ### Using cargo
@@ -1097,7 +1099,7 @@ The *newtype*, the *type state* and the *builder* patterns.
 
 ### Generics and Traits
 
-Implementing shared behavior.
+Implementing shared behavior or configuring GPIOs at compile time.
 
 +++
 
